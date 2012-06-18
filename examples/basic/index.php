@@ -16,7 +16,8 @@ require_once 'views/SiteView.class.php';
 
 $route = array(
     '[404]' => array('FourZeroFour', 'index'),
-    '#^$#' => array('Site', 'index'));
+    '#^$#' => array('Site', 'index'),
+    '#^/another/page/that/takes/an/(?<id>[0-9]+)/cool/right(/)?$#' => array('Site', 'APTAIDCR'));
 
 $request = new Phap\Request($route);
 

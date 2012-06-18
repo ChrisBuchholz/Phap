@@ -13,4 +13,9 @@ class SiteController extends Phap\Controller {
         $this->view->index($data);
     }
 
+    public function APTAIDCR($id) {
+        $data = $this->model->APTAIDCR(array('id' => $id));
+        $this->view->APTAIDCR($data);
+    }
+
 }
