@@ -4,6 +4,14 @@ namespace Phap;
 
 abstract class View {
 
+    /* ***** private methods ***** */
+
+    private function getTemplateContents(&$template, &$partials) {
+        $template = file_get_contents($template);
+        foreach(array_keys($partials) as $pkey)
+            $partials[$pkey] = file_get_contents($partials[$pkey]);
+    }
+
     /* ***** public methods ***** */
 
     public function setData($data) {
@@ -15,9 +23,10 @@ abstract class View {
     }
 
     public function render($data, $template, $partials = array()) {
+        $this->getTemplateContents($template, $partials);
         $mustache = new \Mustache();
         echo $mustache->render(
-            file_get_contents($template),
+            $template,
             $data,
             $partials
         );
