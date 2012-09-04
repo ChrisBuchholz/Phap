@@ -10,4 +10,6 @@ require_once 'class/View.php';
 require_once 'class/Phap.php';
 
 require_once 'lib/markdown/markdown.php';
-require_once 'lib/mustache/Mustache.php';
+
+require 'lib/Mustache/Autoloader.php';
+Mustache_Autoloader::register();
