@@ -24,12 +24,14 @@ abstract class View {
 
     public function render($data, $template, $partials = array()) {
         $this->getTemplateContents($template, $partials);
-        $mustache = new \Mustache_Engine;
-        echo $mustache->render(
-            $template,
-            $data,
-            $partials
-        );
+        $mustache = new \Mustache_Engine(array(
+            'partials' => $partials,
+            'escape' => function($value) {
+                return htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
+            },
+            'charset' => 'UTF-8'
+        ));
+        echo $mustache->render($template, $data);
     }
 
 }
