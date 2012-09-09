@@ -49,6 +49,7 @@ class Dispatcher {
 
         foreach($this->routes as $key => $value) {
             if($key == '[404]') {
+                header('HTTP/1.0 404 Not Found');
                 $four_zero_four = $value;
             }
             else {
