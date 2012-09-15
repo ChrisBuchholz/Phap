@@ -34,6 +34,9 @@ abstract class Model {
 
     /* ***** public methods ***** */
 
+    /**
+     * getMarkdown
+     **/
     public function getMarkdown($file) {
         $content = file_get_contents($file);
         return Markdown($content);

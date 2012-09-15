@@ -48,6 +48,8 @@ class Request {
         $this->session = $_SESSION;
     }
 
+    // --- a bunch of setters
+
     public function getRoutes() {
         return $this->routes;
     }

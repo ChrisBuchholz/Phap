@@ -37,14 +37,29 @@ abstract class Controller {
 
     /* ***** public methods ***** */
 
+    /**
+     * setParameters
+     *
+     * parameters are the regex subpattern-variable matches from the route
+     * these will get passed as arguments to the controllers method that
+     * invoke($action) calls 
+     **/
     public function setParameters($parameters) {
         $this->parameters = $parameters;
     }
 
+    /**
+     * setVerb
+     *
+     * verb is the request method (POST, GET, PUT, DELETE ..)
+     **/
     public function setVerb($verb) {
         $this->verb = $verb;
     }
 
+    /**
+     * invoke
+     **/
     public function invoke($action) {
         if(!is_array($this->parameters)) {
             $this->parameters = array();

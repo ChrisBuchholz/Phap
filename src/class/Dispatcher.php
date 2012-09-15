@@ -43,16 +43,22 @@ class Dispatcher {
 
     /* ***** private methods ***** */
 
+    /**
+     * parseRequest
+     **/
     private function parseRequest() {
         $four_zero_four = array();
         $is_match = false;
 
+        // runs all the routes through and searches for a fit the matches
+        // the request
         foreach($this->routes as $key => $value) {
-            if($key == '[404]') {
+            if($key == PHAP_404_ROUTE) {
                 header('HTTP/1.0 404 Not Found');
                 $four_zero_four = $value;
             }
             else {
+                // does the requests url match the regex request pattern($key)?
                 if(preg_match($key, $this->url, $matches)) {
                     $this->controllerName = $value[0];
                     $this->actionName = $value[1];
@@ -62,6 +68,8 @@ class Dispatcher {
             }
         }
 
+        // if there is no route matching the request, it reverts to the 
+        // 404 route, and one exists 
         if(!$is_match) {
             $this->controllerName = $four_zero_four[0];
             $this->actionName = $four_zero_four[1];
@@ -75,6 +83,9 @@ class Dispatcher {
         $this->factory = $factory;
     }
 
+    /**
+     * dispatch
+     **/
     public function dispatch($routes, $url, $verb, $post, $cookie, $session) {
         $this->routes = $routes;
         $this->url = $url;

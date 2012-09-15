@@ -24,6 +24,13 @@
  * Source Code: https://github.com/ChrisBuchholz/Phap
  **/
 
+// this file acts as the "front-end" that takes care of getting all the needed
+// files, and sets everything up needed to use Phap, so to use Phap, one should
+// only need to include this file
+
+// magic constant that can be used to define a 404 route
+define('PHAP_404_ROUTE', 'phap_404_route');
+
 require_once 'class/IControllerFactory.php';
 require_once 'class/Container.php';
 require_once 'class/Controller.php';

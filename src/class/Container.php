@@ -30,10 +30,23 @@ class Container implements IControllerFactory {
 
     /* ***** public methods ***** */
 
+    /**
+     * getDispatcher
+     *
+     * instantiate the dispatcher, which takes care of parsing and storing
+     * everything from the url request, to post, get, cookies, sessions and
+     * more, and makes it usable for the controllers, models and views.
+     **/
     public function getDispatcher() {
         return new Dispatcher($this);
     }
 
+    /**
+     * this methods inherits from the iControllerFactory interface method to
+     * create and return the specific controller object, defined by $name,
+     * which in turn instantiates the model and the view objects from the same
+     * format
+     **/
     public function getController($name) {
         $modelName = "{$name}Model";
         $controllerName = "{$name}Controller";

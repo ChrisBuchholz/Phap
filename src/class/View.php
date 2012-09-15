@@ -30,6 +30,12 @@ abstract class View {
 
     /* ***** private methods ***** */
 
+    /**
+     * getTemplateContents
+     *
+     * gets the content of both template and partials and updates them,
+     * by reference, to contain it
+     **/
     private function getTemplateContents(&$template, &$partials) {
         $template = file_get_contents($template);
         foreach(array_keys($partials) as $pkey)
@@ -46,6 +52,13 @@ abstract class View {
         $this->templateName = $name;
     }
 
+    /**
+     * render
+     *
+     * renders the requested mustache template with partials and everything
+     *
+     * will use utf-8 - this should probably not be hardcoded
+     **/
     public function render($data, $template, $partials = array()) {
         $this->getTemplateContents($template, $partials);
         $mustache = new \Mustache_Engine(array(

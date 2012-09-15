@@ -26,7 +26,7 @@ require_once 'views/SiteView.class.php';
 // the second value must be the name of the method to be called in
 // the 'SiteController'
 $request = new Phap\Request(array(
-    '[404]' => array('FourZeroFour', 'index'),
+    PHAP_404_ROUTE => array('FourZeroFour', 'index'),
     '#^$#' => array('Site', 'index'),
     '#^/another/page/that/takes/an/(?<id>[0-9]+)/cool/right(/)?$#' => array('Site', 'APTAIDCR')));
 

@@ -26,6 +26,8 @@
 
 namespace Phap;
 
+// factory interface for instantiating the controller object
+
 interface IControllerFactory {
 
     function getController($name);
