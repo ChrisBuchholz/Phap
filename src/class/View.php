@@ -30,6 +30,30 @@ abstract class View {
 
     /* ***** private methods ***** */
 
+    // if you come to this page by being redirected by 
+    // Redirect::to()->with_input(...), make that input data available
+    // in the $data array
+    private function bootstrapInput(&$data) {
+        if (isset($_SESSION['phap_input'])) {
+            foreach ($_SESSION['phap_input'] as $key => $value) {
+                $data["input-$key"] = $value;
+            }
+            unset($_SESSION['phap_input']);
+        }
+    }
+
+    // if you come to this page by being redirected by 
+    // Redirect::to()->with_errors(...), make that error data available
+    // in the $data array
+    private function bootstrapErrors(&$data) {
+        if (isset($_SESSION['phap_errors'])) {
+            foreach ($_SESSION['phap_errors'] as $key => $value) {
+                $data["errors-$value"] = true;
+            }
+            unset($_SESSION['phap_errors']);
+        }
+    }
+
     /**
      * getTemplateContents
      *
@@ -60,6 +84,9 @@ abstract class View {
      * will use utf-8 - this should probably not be hardcoded
      **/
     public function render($data, $template, $partials = array()) {
+        $this->bootstrapInput($data);
+        $this->bootstrapErrors($data);
+        $data['rootPath'] = ROOTPATH;
         $this->getTemplateContents($template, $partials);
         $mustache = new \Mustache_Engine(array(
             'partials' => $partials,

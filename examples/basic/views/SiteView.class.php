@@ -15,4 +15,18 @@ class SiteView extends Phap\View {
             'templates/Site_APTAIDCR.mustache');
     }
 
+    public function Forms($data) {
+        $data['page'] = 'forms';
+        $this->render(
+            $data,
+            'templates/Site_Forms.mustache');
+    }
+
+    public function Post($data) {
+        $data['page'] = 'post';
+        $this->render(
+            $data,
+            'templates/Site_Post.mustache');
+    }
+
 }

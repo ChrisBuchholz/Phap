@@ -30,16 +30,13 @@ class Dispatcher {
 
     /* ***** private variables ***** */
 
-    private $factory;
-    private $routes;
-    private $url;
-    private $verb;
-    private $post;
-    private $cookie;
-    private $session;
-    private $controllerName;
-    private $actionName;
-    private $parameters;
+    private $_factory;
+    private $_routes;
+    private $_url;
+    private $_verb;
+    private $_controllerName;
+    private $_actionName;
+    private $_parameters;
 
     /* ***** private methods ***** */
 
@@ -52,17 +49,16 @@ class Dispatcher {
 
         // runs all the routes through and searches for a fit the matches
         // the request
-        foreach($this->routes as $key => $value) {
+        foreach($this->_routes as $key => $value) {
             if($key == PHAP_404_ROUTE) {
-                header('HTTP/1.0 404 Not Found');
                 $four_zero_four = $value;
             }
             else {
                 // does the requests url match the regex request pattern($key)?
-                if(preg_match($key, $this->url, $matches)) {
-                    $this->controllerName = $value[0];
-                    $this->actionName = $value[1];
-                    $this->parameters = array_slice($matches, 1);
+                if(preg_match($key, $this->_url, $matches)) {
+                    $this->_controllerName = $value[0];
+                    $this->_actionName = $value[1];
+                    $this->_parameters = array_slice($matches, 1);
                     $is_match = true;
                 }
             }
@@ -71,8 +67,9 @@ class Dispatcher {
         // if there is no route matching the request, it reverts to the 
         // 404 route, and one exists 
         if(!$is_match) {
-            $this->controllerName = $four_zero_four[0];
-            $this->actionName = $four_zero_four[1];
+            header('HTTP/1.0 404 Not Found');
+            $this->_controllerName = $four_zero_four[0];
+            $this->_actionName = $four_zero_four[1];
         }
 
     }
@@ -80,26 +77,23 @@ class Dispatcher {
     /* ***** public methods ***** */
 
     public function __construct(IControllerFactory $factory) {
-        $this->factory = $factory;
+        $this->_factory = $factory;
     }
 
     /**
      * dispatch
      **/
-    public function dispatch($routes, $url, $verb, $post, $cookie, $session) {
-        $this->routes = $routes;
-        $this->url = $url;
-        $this->verb = $verb;
-        $this->post = $post;
-        $this->cookie = $cookie;
-        $this->session = $session;
+    public function dispatch($routes, $url, $verb) {
+        $this->_routes = $routes;
+        $this->_url = $url;
+        $this->_verb = $verb;
 
         $this->parseRequest();
 
-        $controller = $this->factory->getController($this->controllerName);
-        $controller->setParameters($this->parameters);
-        $controller->setVerb($this->verb);
-        $controller->invoke($this->actionName);
+        $controller = $this->_factory->getController($this->_controllerName);
+        $controller->setParameters($this->_parameters);
+        $controller->setVerb($this->_verb);
+        $controller->invoke($this->_actionName);
     }
 
 }

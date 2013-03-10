@@ -28,16 +28,21 @@
 // files, and sets everything up needed to use Phap, so to use Phap, one should
 // only need to include this file
 
-// magic constant that can be used to define a 404 route
+session_start();
+
 define('PHAP_404_ROUTE', 'phap_404_route');
+define('ROOTPATH', dirname($_SERVER['SCRIPT_NAME']) . '/');
 
 require_once 'class/IControllerFactory.php';
 require_once 'class/Container.php';
 require_once 'class/Controller.php';
 require_once 'class/Dispatcher.php';
 require_once 'class/Model.php';
-require_once 'class/Request.php';
+require_once 'class/Route.php';
 require_once 'class/View.php';
+require_once 'class/Input.php';
+require_once 'class/Validator.php';
+require_once 'class/Redirect.php';
 require_once 'class/Phap.php';
 
 require_once 'lib/markdown/markdown.php';

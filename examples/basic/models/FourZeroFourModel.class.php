@@ -4,7 +4,7 @@ class FourZeroFourModel extends Phap\Model {
     /* ***** public methods ***** */
 
     public function getIndex() {
-        $page = $_SERVER['PATH_INFO'];
+        $page = @$_SERVER['PATH_INFO'];
         return array(
             'title' => "Siden blev ikke fundet",
             'header' => "Siden $page blev ikke fundet",

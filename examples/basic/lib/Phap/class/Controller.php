@@ -28,7 +28,7 @@ namespace Phap;
 
 abstract class Controller {
 
-    /* ***** private properties ***** */
+    /* ***** protected properties ***** */
 
     protected $model;
     protected $view;

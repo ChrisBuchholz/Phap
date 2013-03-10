@@ -24,36 +24,44 @@
  * Source Code: https://github.com/ChrisBuchholz/Phap
  **/
 
-class Phap {
+namespace Phap;
 
-    private $_route = null;
-    private $_container;
+class Redirect {
 
-    public function __construct() {
-        // create container
-        $this->_container = new Phap\Container();
+    /* ******* private properties ******* */
+
+    private $_where;
+    private $_input = false;
+    private $_errors = false;
+
+    /* ******* public methods ******* */
+
+    public function __construct($where) {
+        $this->_where = $where;
     }
 
-    /**
-     * SetRoute
-     **/
-    public function setRoute(&$route) {
-        $this->_route
-            = ($route instanceof Phap\Route)
-            ? $route
-            : null;
-        if($this->_route == null) return false;
-        return true;
-    } 
+    public function __destruct() {
+        $_SESSION["phap_input"] = $this->_input;
+        $_SESSION["phap_errors"] = $this->_errors;
+        header('location: ' . $this->_where);
+        exit; 
+    }
 
-    /**
-     * launch
-     **/
-    public function launch() {
-        $this->_container->getDispatcher()->dispatch(
-            $this->_route->getRoutes(),
-            $this->_route->getUrl(),
-            $this->_route->getVerb());
+    public function with_input($input) {
+        $this->_input = $input;
+        return $this;
+    }
+
+    public function with_errors($errors) {
+        $this->_errors = $errors;
+        exit;
+        return $this;
+    }
+
+    /* ******* public static methods ******* */
+
+    public static function to($where) {
+        return new Redirect($where); 
     }
 
 }

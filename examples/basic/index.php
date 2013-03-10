@@ -3,8 +3,6 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-session_start();
-
 // you need Phap
 require_once 'lib/Phap/phap.php';
 
@@ -25,11 +23,13 @@ require_once 'views/SiteView.class.php';
 // then the first value should be 'Site'.
 // the second value must be the name of the method to be called in
 // the 'SiteController'
-$request = new Phap\Request(array(
+$route = new Phap\Route(array(
     PHAP_404_ROUTE => array('FourZeroFour', 'index'),
     '#^$#' => array('Site', 'index'),
-    '#^/another/page/that/takes/an/(?<id>[0-9]+)/cool/right(/)?$#' => array('Site', 'APTAIDCR')));
+    '#^another/page/that/takes/an/(?<id>[0-9]+)/cool/right(/)?$#' => array('Site', 'APTAIDCR'),
+    '#^forms(/)?$#' => array('Site', 'Forms', 'GET'),
+    '#^post(/)?$#' => array('Site', 'Post', 'POST')));
 
 $phap = new Phap();
-$phap->setRequest($request);
+$phap->setRoute($route);
 $phap->launch();

@@ -26,45 +26,51 @@
 
 namespace Phap;
 
-abstract class Controller {
+class Input {
 
-    /* ***** protected properties ***** */
+    /* ******* private properties ******* */
 
-    protected $model;
-    protected $view;
-    protected $parameters = array();
-    protected $verb;
+    private static $_post = false;
+    private static $_files = false;
 
-    /* ***** public methods ***** */
+    /* ******* private static methods ******* */
 
-    /**
-     * setParameters
-     *
-     * parameters are the regex subpattern-variable matches from the route
-     * these will get passed as arguments to the controllers method that
-     * invoke($action) calls 
-     **/
-    public function setParameters($parameters) {
-        $this->parameters = $parameters;
+    private static function _bootstrapPost() {
+        if (!self::$_post) 
+            self::$_post = $_POST;
+        return self::$_post;
     }
 
-    /**
-     * setVerb
-     *
-     * verb is the request method (POST, GET, PUT, DELETE ..)
-     **/
-    public function setVerb($verb) {
-        $this->verb = $verb;
+    private static function _bootstrapFile() {
+        if (!self::$_files) 
+            self::$_files = $_FILES;
+        return self::$_files;
     }
 
-    /**
-     * invoke
-     **/
-    public function invoke($action) {
-        if(!is_array($this->parameters)) {
-            $this->parameters = array();
-        }
-        return call_user_func_array(array($this, $action), $this->parameters);
+    /* ******* public static methods ******* */
+
+    public static function post($key = false, $defaultValue = false) {
+        $post = self::_bootstrapPost();
+        if ($key)
+            return array_key_exists($key, $post) ? $post[$key] : $defaultValue;
+        else
+            return $post;
+    }
+
+    public static function has($key) {
+        $post = self::_bootstrapPost();
+        return array_key_exists($key, $post);
+    }
+
+    public static function file($key = false, $meta = false) {
+        $file = self::_bootstrapFile();
+        if ($key)
+            $rtrn = array_key_exists($key, $file) ? $file[$key] : false;
+        else
+            $rtrn = $file;
+        if ($meta)
+            return array_key_exists($meta, $rtrn) ? $rtrn[$meta] : false;
+        return $rtrn;
     }
 
 }

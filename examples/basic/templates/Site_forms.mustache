@@ -1,0 +1,11 @@
+<form method="post" action="{{rootPath}}post">
+    {{#errors-name}}
+    Du skal angive et navn
+    {{/errors-name}}
+    <input type="text" name="name" value="{{input-name}}"><br>
+    {{#errors-email}}
+    Du skal angive en rigtig email adresse
+    {{/errors-email}}
+    <input type="email" name="email" value="{{input-email}}"><br>
+    <input type="submit" name="btn">
+</form>
