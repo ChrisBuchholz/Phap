@@ -27,8 +27,8 @@ $route = new Phap\Route(array(
     PHAP_404_ROUTE => array('FourZeroFour', 'index'),
     '#^$#' => array('Site', 'index'),
     '#^another/page/that/takes/an/(?<id>[0-9]+)/cool/right(/)?$#' => array('Site', 'APTAIDCR'),
-    '#^forms(/)?$#' => array('Site', 'Forms', 'GET'),
-    '#^post(/)?$#' => array('Site', 'Post', 'POST')));
+    '#^forms(/)?$#' => array('Site', 'Forms'),
+    '#^post(/)?$#' => array('Site', 'Post')));
 
 $phap = new Phap();
 $phap->setRoute($route);
