@@ -54,7 +54,6 @@ class Redirect {
 
     public function with_errors($errors) {
         $this->_errors = $errors;
-        exit;
         return $this;
     }
 
