@@ -31,7 +31,9 @@
 session_start();
 
 define('PHAP_404_ROUTE', 'phap_404_route');
-define('ROOTPATH', dirname($_SERVER['SCRIPT_NAME']) . '/');
+
+function endWithSlash($str) { return substr($str, -1) == '/' ? $str : $str . '/'; }
+!defined('ROOTPATH') && define('ROOTPATH', endWithSlash(dirname($_SERVER['SCRIPT_NAME'])));
 
 require_once 'class/IControllerFactory.php';
 require_once 'class/Container.php';
