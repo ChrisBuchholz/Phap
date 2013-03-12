@@ -41,8 +41,8 @@ class Redirect {
     }
 
     public function __destruct() {
-        $_SESSION["phap_input"] = $this->_input;
-        $_SESSION["phap_errors"] = $this->_errors;
+        $this->_input && $_SESSION["phap_input"] = $this->_input;
+        $this->_errors && $_SESSION["phap_errors"] = $this->_errors;
         header('location: ' . $this->_where);
         exit; 
     }
